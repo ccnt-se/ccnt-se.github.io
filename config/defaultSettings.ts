@@ -18,6 +18,7 @@ const Settings: ProLayoutProps & {
   title: 'CCNT-SE',
   pwa: true,
   // logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+  // @ts-ignore
   logo: false,
   footerRender: false,
   iconfontUrl: '',

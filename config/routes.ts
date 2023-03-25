@@ -23,10 +23,10 @@ export default [
   //   ],
   // },
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
+    path: '/',
+    name: 'home',
+    // icon: 'smile',
+    component: './Home',
   },
   // {
   //   path: '/admin',
@@ -46,14 +46,10 @@ export default [
   //   ],
   // },
   {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
-  },
-  {
-    path: '/',
-    redirect: '/welcome',
+    name: 'tool.tool-list',
+    // icon: 'table',
+    path: '/tool',
+    component: './ToolList',
   },
   {
     path: '*',
