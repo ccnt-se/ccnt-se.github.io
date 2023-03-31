@@ -152,4 +152,12 @@ export default defineConfig({
     strategy: 'normal',
   },
   requestRecord: {},
+
+  /**
+   * @name history 路由模式
+   * @description 默认是 browser，这里设置为 hash
+   */
+  history: {
+    type: 'hash',
+  },
 });
