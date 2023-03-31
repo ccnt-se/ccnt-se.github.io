@@ -26,5 +26,9 @@ export default {
   'pages.welcome.alertMessage': '更快更强的重型组件，已经发布。',
   'pages.admin.subPage.title': ' 这个页面只有 admin 权限才能查看',
   'pages.admin.subPage.alertMessage': 'umi ui 现已发布，欢迎使用 npm run ui 启动体验。',
-  'pages.toolList.githubIcon': 'Github开源',
+  'pages.toolList.githubIcon': 'Github代码开源',
+  'pages.toolList.videoIcon': '视频演示',
+  'pages.toolList.dockerIcon': '可用的Docker容器',
+  'pages.toolList.ideaPluginIcon': '可用的IDEA插件',
+  'pages.toolList.compiledProduct': '可用的编译制品',
 };

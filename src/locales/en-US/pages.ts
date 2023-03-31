@@ -29,4 +29,8 @@ export default {
   'pages.admin.subPage.alertMessage':
     'Umi ui is now released, welcome to use npm run ui to start the experience.',
   'pages.toolList.githubIcon': 'Open Source on Github',
+  'pages.toolList.videoIcon': 'Video Demo',
+  'pages.toolList.dockerIcon': 'Docker Image Available',
+  'pages.toolList.ideaPluginIcon': 'IDEA Plugin Available',
+  'pages.toolList.compiledProduct': 'Compiled Product Available',
 };

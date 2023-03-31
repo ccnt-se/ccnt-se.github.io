@@ -52,6 +52,13 @@ export default [
     component: './ToolList',
   },
   {
+    name: 'tool.tool-detail',
+    // icon: 'table',
+    path: '/tool/:name',
+    component: './ToolDetail',
+    hideInMenu: true,
+  },
+  {
     path: '*',
     layout: false,
     component: './404',
