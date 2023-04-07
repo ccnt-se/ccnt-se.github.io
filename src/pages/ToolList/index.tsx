@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.less';
 import { history } from 'umi';
 import { createFromIconfontCN, GithubFilled, PlayCircleFilled } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { Carousel, Col, Row, Tooltip, Typography } from 'antd';
 import { useIntl } from '@umijs/max';
 import '@/services/tool/typings.d.ts';
+
+const { Paragraph } = Typography;
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_3985552_xhu21628atl.js',
@@ -64,18 +66,30 @@ const ListItem: React.FC<{ info: API.Tool.Info }> = ({ info }) => {
 
   return (
     <div className={styles.listItem} onClick={() => history.push(`/tool/${info.name}`)}>
-      <div className={styles.listItemTitle}>{info.name}</div>
-      <div className={styles.listItemIconGroup}>
-        {info.tagIcons.map((key: string) => {
-          const icon = icons[key];
-          return (
-            <Tooltip title={icon.tooltip} key={key}>
-              <span className={styles.listItemIcon}>{icon.icon}</span>
-            </Tooltip>
-          );
-        })}
-      </div>
-      <div className={styles.listItemContent}>{getIntroduction(info.introduction)}</div>
+      <Row>
+        {/* 内容区域 */}
+        <Col lg={16} md={14} sm={12} xs={24}>
+          <div className={styles.listItemTitle}>{info.name}</div>
+          <div className={styles.listItemIconGroup}>
+            {info.tagIcons.map((key: string) => {
+              const icon = icons[key];
+              return (
+                <Tooltip title={icon.tooltip} key={key}>
+                  <span className={styles.listItemIcon}>{icon.icon}</span>
+                </Tooltip>
+              );
+            })}
+          </div>
+          <Paragraph ellipsis={{ rows: 3, expandable: false }}>
+            {getIntroduction(info.introduction)}
+          </Paragraph>
+        </Col>
+
+        {/* 图片区域 */}
+        <Col lg={8} md={10} sm={12} xs={24} style={{ backgroundColor: '#ddd' }}>
+          <Carousel style={{ height: '100%', backgroundColor: '#0dd' }}></Carousel>
+        </Col>
+      </Row>
     </div>
   );
 };
