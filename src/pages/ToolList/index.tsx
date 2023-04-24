@@ -7,6 +7,7 @@ import {createFromIconfontCN, GithubFilled, PlayCircleFilled} from '@ant-design/
 import {Carousel, Col, Image, Row, Tooltip, Typography} from 'antd';
 import {useIntl} from '@umijs/max';
 import '@/services/tool/typings.d.ts';
+import {listInfo} from '@/services/tool/api';
 
 const {Paragraph} = Typography;
 
@@ -14,8 +15,8 @@ const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/c/font_3985552_xhu21628atl.js',
 });
 
-const ListItem: React.FC<{ info: API.Tool.Info }> = ({info}) => {
-  const {formatMessage, locale} = useIntl();
+const ListItem: React.FC<{ info: API.Tool.Detail }> = ({info}) => {
+  const {formatMessage} = useIntl();
 
   const iconSize = 32;
   const icons: { [key: string]: API.Tool.TagIcon } = {
@@ -46,29 +47,6 @@ const ListItem: React.FC<{ info: API.Tool.Info }> = ({info}) => {
     },
   };
 
-  /**
-   * 获取介绍, 优先使用当前语言的介绍
-   * @param introduction
-   */
-  const getIntroduction = (introduction: API.Tool.Info['introduction']): string => {
-    console.log(typeof introduction);
-    if (typeof introduction === 'string') {
-      return introduction;
-    } else if (typeof introduction === 'object') {
-      const key = locale.replace('-', '_');
-      console.log(key);
-      switch (key) {
-        case 'zh_CN':
-          if (introduction.zh_CN) return introduction.zh_CN;
-        case 'en_US':
-          if (introduction.en_US) return introduction.en_US;
-        default:
-          return '';
-      }
-    }
-    return '';
-  };
-
   return (
     <div className={styles.listItem} onClick={() => history.push(`/tool/${info.name}`)}>
       <Row>
@@ -86,19 +64,20 @@ const ListItem: React.FC<{ info: API.Tool.Info }> = ({info}) => {
             })}
           </div>
           <Paragraph className={styles.listItemIntroduction} ellipsis={{rows: 3, expandable: false}}>
-            {getIntroduction(info.introduction)}
+            {info.introduction}
           </Paragraph>
         </Col>
 
         {/* 图片区域 */}
         <Col lg={8} md={10} sm={24} xs={24} onClick={(event) => event.stopPropagation()}>
           <Carousel>
-            <div>
-              <Image src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"/>
-            </div>
-            <div>
-              <Image src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"/>
-            </div>
+            {
+              info.images?.map(url => (
+                <div key={url}>
+                  <Image src={`/data/tools/${info.name}/${url}`}/>
+                </div>
+              ))
+            }
           </Carousel>
         </Col>
       </Row>
@@ -108,17 +87,17 @@ const ListItem: React.FC<{ info: API.Tool.Info }> = ({info}) => {
 
 
 const ToolList: React.FC = () => {
-  const [data, setData] = useState<API.Tool.JSONData>({tools: []});
+  const {locale} = useIntl();
+  const [data, setData] = useState<API.Tool.ListInfo[]>([]);
 
   useEffect(() => {
-    fetch('/data/tools.json')
-      .then((response) => response.json())
+    listInfo(locale)
       .then((data) => setData(data));
   }, []);
 
   return (
     <PageContainer title={false}>
-      {data.tools.map((item: any) => {
+      {data.map((item: any) => {
         return <ListItem key={item.name} info={item}/>;
       })}
     </PageContainer>

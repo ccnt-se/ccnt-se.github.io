@@ -11,7 +11,13 @@
       "introduction": {
         "zh_CN": "Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。",
         "en_US": "Repair4J is a tool for automatically repairing bugs in Java programs."
-      }
+      },
+      "images": [
+        "image/image_001.png",
+        "image/image_002.png",
+        "image/image_003.png"
+      ],
+      "video": "http://storage.live.com/items/2778DE295D7ECB83!108:/Repair4J.mp4?authkey=APOaaWFStRGNHcc"
     }
   ]
 }

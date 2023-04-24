@@ -8,17 +8,23 @@ declare namespace API.Tool {
   };
 
   type JSONData = {
-    tools: ToolInfo[];
+    tools: {
+      name: string;
+      introduction: API.MultiLanguageString
+      tagIcons: string[];
+      images?: string[];
+      video?: string;
+    }[];
   };
 
-  type Info = {
+  type ListInfo = {
     name: string;
-    introduction:
-      | {
-          zh_CN?: string;
-          en_US?: string;
-        }
-      | string;
+    introduction: string;
     tagIcons: string[];
-  };
+    images?: string[];
+  }
+
+  type Detail = {
+    video?: string
+  } & ListInfo
 }

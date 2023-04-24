@@ -5,6 +5,7 @@
   border-radius: 4px;
   box-shadow: 2px 2px 4px #ccc; /* 设置边框阴影 */
   transition: box-shadow 0.3s ease-in-out; /* 添加过渡效果 */
+  background-color: #fff;
 
   &:hover {
     box-shadow: 7px 7px 14px #ccc; /* 添加浮起效果 */
@@ -38,29 +39,43 @@
   .listItemIntroduction{
     margin-top: 10px;
   }
-}
 
-.ant-carousel {
-  border-radius: 4px;
 
-  max-height: 240px;
-  overflow: hidden;
+  :global {
+    .ant-carousel {
+      border-radius: 4px;
+      max-height: 240px;
+      overflow: hidden;
 
-  .slick-slide {
-    text-align: center;
-    height: 240px;
-    line-height: 240px;
-    background: #ababab;
+      .slick-dots {
+        li {
+          button {
+            border: #bbb 1px solid !important;
+            height: 4px;
+            border-radius: 2px;
+          }
+        }
+      }
 
-    .ant-image {
-      height: 240px;
-      object-fit: cover;
+      .slick-slide {
+        text-align: center;
+        height: 240px;
+        line-height: 240px;
+        background: #777;
 
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
+        .ant-image {
+          height: 240px;
+          object-fit: cover;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
       }
     }
   }
 }
+
+
