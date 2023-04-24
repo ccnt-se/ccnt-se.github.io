@@ -5,7 +5,7 @@ import {history} from 'umi';
 import {useIntl} from '@umijs/max';
 import {useParams} from 'react-router';
 import {getDetailByName} from "@/services/tool/api";
-import {Card, Carousel, Image, Tabs} from "antd";
+import {Card, Carousel, Divider, Image, Tabs} from "antd";
 import {FileImageOutlined, PlayCircleFilled} from "@ant-design/icons";
 import styles from './styles.less';
 import './styles.less';
@@ -31,7 +31,14 @@ const ToolDetail: React.FC = () => {
 
   return <PageContainer breadcrumb={undefined} title={false}>
     <div className={styles.title}>{params.name}</div>
-    <Card className={styles.card} loading={!data}>{data?.introduction}</Card>
+    <Card className={styles.card} loading={!data}>
+      <div style={{marginBottom: 5, color: 'rgba(0, 0, 0, 0.4)'}}>
+        作者：黄耀华
+        <Divider type="vertical" />
+        更新时间：2023-4-23 18:00:00
+      </div>
+      {data?.introduction}
+    </Card>
     <Card className={styles.card} loading={!data}>
       <Tabs
         tabPosition={'left'}
