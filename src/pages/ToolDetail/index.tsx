@@ -5,23 +5,87 @@ import {history} from 'umi';
 import {useIntl} from '@umijs/max';
 import {useParams} from 'react-router';
 import {getDetailByName} from "@/services/tool/api";
-import {Card, Carousel, Divider, Image, Tabs} from "antd";
+import type {TabsProps} from "antd";
+import {Card, Carousel, Divider, Image, Tabs, Tooltip} from "antd";
 import {FileImageOutlined, PlayCircleFilled} from "@ant-design/icons";
 import styles from './styles.less';
 import './styles.less';
 
+const ImageCarousel: React.FC<{ name: string, images: API.Tool.Image[] }> = ({name, images}) => {
+  return (
+    <Carousel
+      appendDots={(dots: any[]) =>
+        <ul style={{margin: 0}}>
+          {
+            dots && dots.map(dot => {
+                const title = images[dot.key].title;
+                return title ? <Tooltip title={title} key={dot.key}>
+                  {dot}
+                </Tooltip> : dot
+              }
+            )
+          }
+        </ul>
+      }
+    >
+      {
+        images.map(img => (
+          <div key={img.url}>
+            <Image preview={{mask: false}} src={`/data/tools/${name}/${img.url}`}/>
+          </div>
+        ))
+      }
+    </Carousel>
+  )
+}
+
+const TabItem: React.FC<{ title: string, color?: string, Icon: any }> = ({title, color, Icon}) => {
+  return (
+    <span style={{fontSize: '18px'}}>
+      <Icon style={{fontSize: '24px', color}}/>
+      {title}
+    </span>
+  );
+};
+
 const ToolDetail: React.FC = () => {
 
-  const {locale} = useIntl();
-  const [data, setData] = useState<API.Tool.Detail | undefined>(undefined)
   const params = useParams();
+  const {formatMessage, locale} = useIntl();
+  const [detail, setDetail] = useState<API.Tool.Detail | undefined>(undefined)
+  const [tabs, setTabs] = useState<TabsProps['items']>([])
 
   useEffect(() => {
     if (params.name) {
       getDetailByName(params.name, locale)
         .then(resp => {
           if (resp) {
-            setData(resp)
+            setDetail(resp)
+
+            const tabs: TabsProps['items'] = []
+            if (resp.images) {
+              tabs.push(
+                {
+                  label: <TabItem title={formatMessage({id: 'pages.toolDetail.tabs.image'})} Icon={FileImageOutlined}/>,
+                  key: 'photo',
+                  children: <ImageCarousel name={resp.name} images={resp.images}/>
+                })
+            }
+            if (resp.video) {
+              tabs.push(
+                {
+                  label: <TabItem title={formatMessage({id: 'pages.toolDetail.tabs.video'})}
+                                  color={'#c50000'} Icon={PlayCircleFilled}/>,
+                  key: 'video',
+                  children: (
+                    <video controls width="100%">
+                      <source src={resp.video} type="video/mp4"/>
+                    </video>
+                  )
+                }
+              )
+            }
+            setTabs(tabs)
           } else {
             history.replace('/404')
           }
@@ -31,46 +95,16 @@ const ToolDetail: React.FC = () => {
 
   return <PageContainer breadcrumb={undefined} title={false}>
     <div className={styles.title}>{params.name}</div>
-    <Card className={styles.card} loading={!data}>
+    <Card className={styles.card} loading={!detail}>
       <div style={{marginBottom: 5, color: 'rgba(0, 0, 0, 0.4)'}}>
-        作者：黄耀华
-        <Divider type="vertical" />
-        更新时间：2023-4-23 18:00:00
+        {formatMessage({id: 'pages.toolDetail.author'})}：{detail?.authors.join(',')}
+        <Divider type="vertical"/>
+        {formatMessage({id: 'pages.toolDetail.updated'})}：{detail?.updated}
       </div>
-      {data?.introduction}
+      {detail?.introduction}
     </Card>
-    <Card className={styles.card} loading={!data}>
-      <Tabs
-        tabPosition={'left'}
-        items={[
-          {
-            label: <span style={{fontSize: '18px'}}>
-              <FileImageOutlined style={{fontSize: `24px`}}/>
-              图片
-            </span>,
-            key: 'photo',
-            children: <Carousel>
-              {
-                data?.images?.map(url => (
-                  <div key={url}>
-                    <Image preview={{mask: false}} src={`/data/tools/${data?.name}/${url}`}/>
-                  </div>
-                ))
-              }
-            </Carousel>
-          },
-          {
-            label: <span style={{fontSize: '18px'}}>
-              <PlayCircleFilled style={{fontSize: `24px`, color: '#c50000'}}/>
-              视频
-            </span>,
-            key: 'video',
-            children: <video controls width="100%">
-              <source src={data?.video} type="video/mp4"/>
-            </video>
-          }
-        ]}
-      />
+    <Card className={styles.card} loading={!detail}>
+      <Tabs tabPosition={'left'} items={tabs}/>
     </Card>
   </PageContainer>;
 };

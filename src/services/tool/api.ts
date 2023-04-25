@@ -21,7 +21,10 @@ export async function listInfo(language?: string): Promise<API.Tool.ListInfo[]> 
           name: item.name,
           introduction: localize(item.introduction, language),
           tagIcons: item.tagIcons,
-          images: item.images
+          images: item.images?.map(img => ({
+            title: img.title && localize(img.title, language),
+            url: img.url
+          }))
         }
       })
     )
@@ -35,9 +38,14 @@ export async function getDetailByName(name: string, language?: string): Promise<
     .then((data: API.Tool.JSONData) => data.tools.find((item) => item.name === name))
     .then((item) => (item && {
       name: item.name,
+      updated: item.updated,
+      authors: item.authors.map(a => localize(a, language)),
       introduction: localize(item.introduction, language),
       tagIcons: item.tagIcons,
-      images: item.images,
+      images: item.images?.map(img => ({
+        title: img.title && localize(img.title, language),
+        url: img.url
+      })),
       video: item.video
     }))
 }

@@ -2,6 +2,13 @@
   "tools": [
     {
       "name": "Repair4J",
+      "authors": [
+        {
+          "zh_CN": "黄耀华",
+          "en_US": "Yaohua Huang"
+        }
+      ],
+      "updated": "2023-4-23 18:00:00",
       "tagIcons": [
         "github",
         "docker",
@@ -13,9 +20,20 @@
         "en_US": "Repair4J is a tool for automatically repairing bugs in Java programs."
       },
       "images": [
-        "image/image_001.png",
-        "image/image_002.png",
-        "image/image_003.png"
+        {
+          "title": {
+            "zh_CN": "工具初始页面",
+            "en_US": "Tool initial page"
+          },
+          "url": "image/image_001.png"
+        },
+        {
+          "url": "image/image_002.png"
+        },
+        {
+          "title": "实验数据集",
+          "url": "image/image_003.png"
+        }
       ],
       "video": "http://storage.live.com/items/2778DE295D7ECB83!108:/Repair4J.mp4?authkey=APOaaWFStRGNHcc"
     }

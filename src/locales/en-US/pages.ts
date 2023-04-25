@@ -33,4 +33,8 @@ export default {
   'pages.toolList.dockerIcon': 'Docker Image Available',
   'pages.toolList.ideaPluginIcon': 'IDEA Plugin Available',
   'pages.toolList.compiledProduct': 'Compiled Product Available',
+  'pages.toolDetail.tabs.image': 'Images',
+  'pages.toolDetail.tabs.video': 'Videos',
+  'pages.toolDetail.author': 'Author',
+  'pages.toolDetail.updated': 'Updated',
 };

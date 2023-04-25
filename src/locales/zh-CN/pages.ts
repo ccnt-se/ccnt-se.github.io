@@ -31,4 +31,8 @@ export default {
   'pages.toolList.dockerIcon': '可用的Docker容器',
   'pages.toolList.ideaPluginIcon': '可用的IDEA插件',
   'pages.toolList.compiledProduct': '可用的编译制品',
+  'pages.toolDetail.tabs.image': '图片',
+  'pages.toolDetail.tabs.video': '视频',
+  'pages.toolDetail.author': '作者',
+  'pages.toolDetail.updated': '更新时间',
 };

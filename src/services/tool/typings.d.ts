@@ -10,9 +10,11 @@ declare namespace API.Tool {
   type JSONData = {
     tools: {
       name: string;
-      introduction: API.MultiLanguageString
+      updated: string;
+      authors: API.MultiLanguageString[];
+      introduction: API.MultiLanguageString;
       tagIcons: string[];
-      images?: string[];
+      images?: ImageJSON[];
       video?: string;
     }[];
   };
@@ -21,10 +23,22 @@ declare namespace API.Tool {
     name: string;
     introduction: string;
     tagIcons: string[];
-    images?: string[];
+    images?: Image[];
   }
 
   type Detail = {
-    video?: string
+    authors: string[];
+    updated: string;
+    video?: string;
   } & ListInfo
+
+  type ImageJSON = {
+    title?: API.MultiLanguageString;
+    url: string;
+  }
+
+  type Image = {
+    title?: string;
+    url: string;
+  }
 }

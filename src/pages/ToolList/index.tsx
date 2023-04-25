@@ -72,9 +72,9 @@ const ListItem: React.FC<{ info: API.Tool.Detail }> = ({info}) => {
         <Col lg={8} md={10} sm={24} xs={24} onClick={(event) => event.stopPropagation()}>
           <Carousel>
             {
-              info.images?.map(url => (
-                <div key={url}>
-                  <Image src={`/data/tools/${info.name}/${url}`}/>
+              info.images?.map(img => (
+                <div key={img.url}>
+                  <Image src={`/data/tools/${info.name}/${img.url}`}/>
                 </div>
               ))
             }
