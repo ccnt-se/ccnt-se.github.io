@@ -4,11 +4,24 @@
   margin-bottom: 10px;
 }
 
+.tabCard {
+  margin: 0;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px #ccc; /* 设置边框阴影 */
+  transition: box-shadow 0.3s ease-in-out; /* 添加过渡效果 */
+  background-color: #fff;
+
+  &:hover {
+    box-shadow: 4px 4px 8px #ccc; /* 添加浮起效果 */
+  }
+}
+
 .card {
   margin: 10px 0 0 0;
   border: 1px solid #eee;
   border-radius: 4px;
-  box-shadow: 2px 2px 4px #ccc; /* 设置边框阴影 */
+  box-shadow: 1px 1px 2px #ccc; /* 设置边框阴影 */
   background-color: #fff;
 
   :global {
@@ -64,8 +77,13 @@
         background-color: rgba(0, 0, 0, 0.1);
 
       }
+
       .ant-tabs-tab-btn {
         color: rgba(0, 0, 0, 0.88) !important;
+      }
+
+      .ant-tabs-tabpane {
+        padding: 18px !important;
       }
 
       .ant-tabs-ink-bar {

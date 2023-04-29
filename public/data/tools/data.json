@@ -9,12 +9,6 @@
         }
       ],
       "updated": "2023-4-23 18:00:00",
-      "tagIcons": [
-        "github",
-        "docker",
-        "video",
-        "compiledProduct"
-      ],
       "introduction": {
         "zh_CN": "Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。Repair4J 是一个用于自动修复 Java 程序中的 bug 的工具。",
         "en_US": "Repair4J is a tool for automatically repairing bugs in Java programs."
@@ -35,7 +29,31 @@
           "url": "image/image_003.png"
         }
       ],
-      "video": "http://storage.live.com/items/2778DE295D7ECB83!108:/Repair4J.mp4?authkey=APOaaWFStRGNHcc"
+      "video": "http://storage.live.com/items/2778DE295D7ECB83!108:/Repair4J.mp4?authkey=APOaaWFStRGNHcc",
+      "code": [
+        {
+          "type": "code",
+          "source": "github",
+          "url": "https://github.com/yaohua-H/Repair4J",
+          "title": "Github: yaohua-H/Repair4J",
+          "desc": {
+            "zh_CN": "Repair4J 工具源代码",
+            "en_US": "Repair4J tool source code"
+          }
+        }
+      ],
+      "artifacts": [
+        {
+          "type": "docker",
+          "source": "local",
+          "title": {
+            "zh_CN": "Docker 容器 (YML)",
+            "en_US": "Docker Image (YML)"
+          },
+          "url": [],
+          "desc": ""
+        }
+      ]
     }
   ]
 }

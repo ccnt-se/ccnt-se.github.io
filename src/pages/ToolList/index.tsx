@@ -3,49 +3,15 @@ import React, {useEffect, useState} from 'react';
 import styles from './styles.less';
 import './styles.less';
 import {history} from 'umi';
-import {createFromIconfontCN, GithubFilled, PlayCircleFilled} from '@ant-design/icons';
-import {Carousel, Col, Image, Row, Tooltip, Typography} from 'antd';
+import {Carousel, Col, Image, Row, Typography} from 'antd';
 import {useIntl} from '@umijs/max';
 import '@/services/tool/typings.d.ts';
 import {listInfo} from '@/services/tool/api';
+import CustomIcon from "@/components/CustomIcon";
 
 const {Paragraph} = Typography;
 
-const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/c/font_3985552_xhu21628atl.js',
-});
-
 const ListItem: React.FC<{ info: API.Tool.Detail }> = ({info}) => {
-  const {formatMessage} = useIntl();
-
-  const iconSize = 32;
-  const icons: { [key: string]: API.Tool.TagIcon } = {
-    github: {
-      tooltip: formatMessage({id: 'pages.toolList.githubIcon'}),
-      icon: <GithubFilled style={{fontSize: `${iconSize}px`, color: '#000'}}/>,
-    },
-    video: {
-      tooltip: formatMessage({id: 'pages.toolList.videoIcon'}),
-      icon: <PlayCircleFilled style={{fontSize: `${iconSize}px`, color: '#c50000'}}/>,
-    },
-    docker: {
-      tooltip: formatMessage({id: 'pages.toolList.dockerIcon'}),
-      icon: <IconFont type="icon-docker" style={{fontSize: `${iconSize}px`, color: '#0db7ed'}}/>,
-    },
-    ideaPlugin: {
-      tooltip: formatMessage({id: 'pages.toolList.ideaPluginIcon'}),
-      icon: <IconFont type="icon-Idea" style={{fontSize: `${iconSize}px`}}/>,
-    },
-    compiledProduct: {
-      tooltip: formatMessage({id: 'pages.toolList.compiledProduct'}),
-      icon: (
-        <IconFont
-          type="icon-product-checked-fill"
-          style={{fontSize: `${iconSize}px`, color: '#008600'}}
-        />
-      ),
-    },
-  };
 
   return (
     <div className={styles.listItem} onClick={() => history.push(`/tool/${info.name}`)}>
@@ -54,14 +20,9 @@ const ListItem: React.FC<{ info: API.Tool.Detail }> = ({info}) => {
         <Col lg={16} md={14} sm={24} xs={24} style={{padding: '20px 20px 20px 40px', maxHeight: 240}}>
           <div className={styles.listItemTitle}>{info.name}</div>
           <div className={styles.listItemIconGroup}>
-            {info.tagIcons.map((key: string) => {
-              const icon = icons[key];
-              return (
-                <Tooltip title={icon.tooltip} key={key}>
-                  <span className={styles.listItemIcon}>{icon.icon}</span>
-                </Tooltip>
-              );
-            })}
+            {info.iconTypes.map((type: string) => (
+              <span key={type} className={styles.listItemIcon}><CustomIcon type={type} size='32px' tooltip/></span>
+            ))}
           </div>
           <Paragraph className={styles.listItemIntroduction} ellipsis={{rows: 3, expandable: false}}>
             {info.introduction}

@@ -2,10 +2,6 @@
 /* eslint-disable */
 
 declare namespace API.Tool {
-  type TagIcon = {
-    tooltip: string;
-    icon: React.ReactNode;
-  };
 
   type JSONData = {
     tools: {
@@ -13,16 +9,32 @@ declare namespace API.Tool {
       updated: string;
       authors: API.MultiLanguageString[];
       introduction: API.MultiLanguageString;
-      tagIcons: string[];
-      images?: ImageJSON[];
+      images?: {
+        title?: API.MultiLanguageString;
+        url: string;
+      }[];
       video?: string;
+      code?: {
+        source: string;
+        url: string;
+        title?: API.MultiLanguageString;
+        desc?: API.MultiLanguageString;
+      }[];
+      artifacts?: {
+        type: string;
+        source: string;
+        url: string;
+        title?: API.MultiLanguageString;
+        desc?: API.MultiLanguageString;
+        descUrl?: string;
+      }[];
     }[];
   };
 
   type ListInfo = {
     name: string;
     introduction: string;
-    tagIcons: string[];
+    iconTypes: string[];
     images?: Image[];
   }
 
@@ -30,12 +42,21 @@ declare namespace API.Tool {
     authors: string[];
     updated: string;
     video?: string;
+    code?: {
+      source: string;
+      url: string;
+      title?: string;
+      desc?: string;
+    }[];
+    artifacts?: {
+      type: string;
+      source: string;
+      url: string;
+      title?: string;
+      desc?: string;
+      descUrl?: string;
+    }[];
   } & ListInfo
-
-  type ImageJSON = {
-    title?: API.MultiLanguageString;
-    url: string;
-  }
 
   type Image = {
     title?: string;

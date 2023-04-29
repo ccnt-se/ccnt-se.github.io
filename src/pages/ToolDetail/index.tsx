@@ -1,49 +1,24 @@
 import {PageContainer} from '@ant-design/pro-components';
 import React, {useEffect, useState} from 'react';
-import '@/services/tool/typings.d.ts';
+import {useParams} from 'react-router';
+import type {TabsProps} from "antd";
+import {Card, Col, Divider, Row, Tabs} from "antd";
 import {history} from 'umi';
 import {useIntl} from '@umijs/max';
-import {useParams} from 'react-router';
+
+import CustomIcon from "@/components/CustomIcon";
+import ImageCarousel from "./components/ImageCarousel";
 import {getDetailByName} from "@/services/tool/api";
-import type {TabsProps} from "antd";
-import {Card, Carousel, Divider, Image, Tabs, Tooltip} from "antd";
-import {FileImageOutlined, PlayCircleFilled} from "@ant-design/icons";
+import '@/services/tool/typings.d.ts';
 import styles from './styles.less';
 import './styles.less';
 
-const ImageCarousel: React.FC<{ name: string, images: API.Tool.Image[] }> = ({name, images}) => {
-  return (
-    <Carousel
-      appendDots={(dots: any[]) =>
-        <ul style={{margin: 0}}>
-          {
-            dots && dots.map(dot => {
-                const title = images[dot.key].title;
-                return title ? <Tooltip title={title} key={dot.key}>
-                  {dot}
-                </Tooltip> : dot
-              }
-            )
-          }
-        </ul>
-      }
-    >
-      {
-        images.map(img => (
-          <div key={img.url}>
-            <Image preview={{mask: false}} src={`/data/tools/${name}/${img.url}`}/>
-          </div>
-        ))
-      }
-    </Carousel>
-  )
-}
-
-const TabItem: React.FC<{ title: string, color?: string, Icon: any }> = ({title, color, Icon}) => {
+const TabItem: React.FC<{ title: string, iconType: string }> = ({title, iconType}) => {
+  const {formatMessage} = useIntl();
   return (
     <span style={{fontSize: '18px'}}>
-      <Icon style={{fontSize: '24px', color}}/>
-      {title}
+      <CustomIcon type={iconType} size='24px'/>
+      {formatMessage({id: title})}
     </span>
   );
 };
@@ -64,26 +39,71 @@ const ToolDetail: React.FC = () => {
 
             const tabs: TabsProps['items'] = []
             if (resp.images) {
-              tabs.push(
-                {
-                  label: <TabItem title={formatMessage({id: 'pages.toolDetail.tabs.image'})} Icon={FileImageOutlined}/>,
-                  key: 'photo',
-                  children: <ImageCarousel name={resp.name} images={resp.images}/>
-                })
+              tabs.push({
+                label: <TabItem title={'pages.toolDetail.tabs.image'} iconType={'image'}/>,
+                key: 'photo',
+                children: <ImageCarousel name={resp.name} images={resp.images}/>
+              })
             }
             if (resp.video) {
-              tabs.push(
-                {
-                  label: <TabItem title={formatMessage({id: 'pages.toolDetail.tabs.video'})}
-                                  color={'#c50000'} Icon={PlayCircleFilled}/>,
-                  key: 'video',
-                  children: (
-                    <video controls width="100%">
-                      <source src={resp.video} type="video/mp4"/>
-                    </video>
-                  )
-                }
-              )
+              tabs.push({
+                label: <TabItem title={'pages.toolDetail.tabs.video'} iconType={'video'}/>,
+                key: 'video',
+                children: (
+                  <video controls width="100%">
+                    <source src={resp.video} type="video/mp4"/>
+                  </video>
+                )
+              })
+            }
+            if (resp.code) {
+              tabs.push({
+                label: <TabItem title={'pages.toolDetail.tabs.code'} iconType={'code'}/>,
+                key: 'code',
+                children: (
+                  <Row gutter={[0, 12]}>
+                    {
+                      resp.code && resp.code.map(item => (
+                        <Col key={item.url} span={24}>
+                          <Card className={styles.tabCard} onClick={() => window.open(item.url)}>
+                            <Card.Meta
+                              avatar={<CustomIcon type={item.source} size='48px'/>}
+                              title={item.title || item.source}
+                              description={item.desc}
+                            />
+                          </Card>
+                        </Col>
+                      ))
+                    }
+                  </Row>
+                )
+              })
+            }
+            if (resp.artifacts) {
+              tabs.push({
+                label: <TabItem title={'pages.toolDetail.tabs.artifact'} iconType={'artifact'}/>,
+                key: 'artifact',
+                children: (
+                  <div>
+                    <Row gutter={[12, 10]}>
+                      {
+                        resp.artifacts && resp.artifacts.map(item => (
+                          <Col key={item.title} span={8}>
+                            <Card className={styles.tabCard} bodyStyle={{padding: '12px 18px'}}>
+                              <Card.Meta
+                                avatar={<CustomIcon type={item.type} size='32px'/>}
+                                title={<div style={{height: '32px', lineHeight: '32px'}}>{item.title || item.type}</div>}
+                              />
+                            </Card>
+                          </Col>
+                        ))
+                      }
+                    </Row>
+                    <Divider/>
+                  </div>
+
+                )
+              })
             }
             setTabs(tabs)
           } else {
@@ -103,7 +123,7 @@ const ToolDetail: React.FC = () => {
       </div>
       {detail?.introduction}
     </Card>
-    <Card className={styles.card} loading={!detail}>
+    <Card className={styles.card} loading={!detail} bodyStyle={{padding: 0}}>
       <Tabs tabPosition={'left'} items={tabs}/>
     </Card>
   </PageContainer>;
